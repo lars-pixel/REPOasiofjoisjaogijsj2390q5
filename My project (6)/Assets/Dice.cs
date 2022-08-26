@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-
+    [SerializeField] public static GameObject player1, player2;
     private Sprite[] diceSides;
     private SpriteRenderer rend;
     private int whosTurn = 1;
@@ -15,6 +15,11 @@ public class Dice : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         diceSides = Resources.LoadAll<Sprite>("DiceSides/");
         rend.sprite = diceSides[5];
+
+        player1 = GameObject.Find("Player1movement");
+        player2 = GameObject.Find("Player2movement");
+        player1.GetComponentInChildren<Animator>().enabled = true;
+        player2.GetComponentInChildren<Animator>().enabled = true;
     }
 
     private void OnMouseDown()
@@ -38,10 +43,12 @@ public class Dice : MonoBehaviour
         if (whosTurn == 1)
         {
             GameControl.MovePlayer(1);
+            player1.GetComponentInChildren<Animator>().SetBool("playWalkingAnim", true);
         }
         else if (whosTurn == -1)
         {
             GameControl.MovePlayer(2);
+            player2.GetComponentInChildren<Animator>().SetBool("playWalkingAnim", true);
         }
         whosTurn *= -1;
         coroutineAllowed = true;

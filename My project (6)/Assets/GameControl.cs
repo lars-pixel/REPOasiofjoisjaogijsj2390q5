@@ -22,8 +22,8 @@ public class GameControl : MonoBehaviour
         player1MoveText = GameObject.Find("Player1MoveText");
         player2MoveText = GameObject.Find("Player2MoveText");
 
-        player1 = GameObject.Find("Player1");
-        player2 = GameObject.Find("Player2");
+        player1 = GameObject.Find("Player1movement");
+        player2 = GameObject.Find("Player2movement");
 
         player1.GetComponent<FollowThePath>().moveAllowed = false;
         player2.GetComponent<FollowThePath>().moveAllowed = false;
@@ -36,11 +36,11 @@ public class GameControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player1.GetComponent<FollowThePath>().waypointIndex >
+        if (player1.GetComponent<FollowThePath>().waypointIndex>
             player1StartWaypoint + diceSideThrown)
         {
+            player1.GetComponentInChildren<Animator>().SetBool("playWalkingAnim", false);
             player1.GetComponent<FollowThePath>().moveAllowed = false;
-            player1.GetComponent<Animator>().enabled = false;
             player1MoveText.gameObject.SetActive(false);
             player2MoveText.gameObject.SetActive(true);
             player1StartWaypoint = player1.GetComponent<FollowThePath>().waypointIndex - 1;
@@ -49,8 +49,8 @@ public class GameControl : MonoBehaviour
         if (player2.GetComponent<FollowThePath>().waypointIndex >
             player2StartWaypoint + diceSideThrown)
         {
+            player2.GetComponentInChildren<Animator>().SetBool("playWalkingAnim", false);
             player2.GetComponent<FollowThePath>().moveAllowed = false;
-            player2.GetComponent<Animator>().enabled = false;
             player2MoveText.gameObject.SetActive(false);
             player1MoveText.gameObject.SetActive(true);
             player2StartWaypoint = player2.GetComponent<FollowThePath>().waypointIndex - 1;
@@ -81,13 +81,10 @@ public class GameControl : MonoBehaviour
         {
             case 1:
                 player1.GetComponent<FollowThePath>().moveAllowed = true;
-                player1.GetComponent<Animator>().Play("New Animation");
-
                 break;
 
             case 2:
                 player2.GetComponent<FollowThePath>().moveAllowed = true;
-                player2.GetComponent<Animator>().Play("New Animation");
                 break;
         }
     }

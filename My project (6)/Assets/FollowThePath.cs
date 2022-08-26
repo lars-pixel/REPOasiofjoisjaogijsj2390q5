@@ -8,8 +8,6 @@ public class FollowThePath : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 1f;
 
-    private Animator anim;
-
     [HideInInspector]
     public int waypointIndex = 0;
 
@@ -27,8 +25,10 @@ public class FollowThePath : MonoBehaviour
     {
         if (moveAllowed)
         {
+            GetComponentInChildren<Animator>().Play("New Animation");
             Move();
         }
+
     }
 
     private void Move()
